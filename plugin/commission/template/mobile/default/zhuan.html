@@ -1,0 +1,235 @@
+{template '_header'}
+{template 'commission/common'}
+<script>
+    //查询
+    function showHint(str)
+    {
+        if(str==""){
+            alert("不可进行空查询");
+        }else{
+            var xmlhttp;
+            if (str.length==0)
+            {
+                document.getElementById("txtHint").innerHTML="";
+                return;
+            }
+            if (window.XMLHttpRequest)
+            {
+                // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                xmlhttp=new XMLHttpRequest();
+            }
+            else
+            {
+                // IE6, IE5 浏览器执行代码
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function()
+            {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+                    // document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+                    var usr =JSON.parse(xmlhttp.responseText);
+                    //判断显示条件
+                    if(usr.result.id == {$member['id']}){
+                        alert("不可搜索自己");
+                        document.getElementById("userr").style.display="none";
+                        document.getElementById("zhuann").style.display="none";
+                    }else if(usr.result.id == null){
+                        document.getElementById("userr").style.display="none";
+                        document.getElementById("zhuann").style.display="none"
+                        alert("无此人");
+                    }else{
+                        document.getElementById("userr").style.display="block";
+                        document.getElementById("zhuann").style.display="block"
+                    }
+                    document.getElementById("nickname").innerHTML =usr.result.nickname;
+                    document.getElementById("realname").innerHTML =usr.result.realname;
+                    document.getElementById("ID").innerHTML =usr.result.id;
+                    document.getElementById("UID").innerHTML =usr.result.uid;
+                    document.getElementById("tomon").innerHTML =usr.result.credit2;
+
+                    document.getElementById("nickname1").value =usr.result.nickname;
+                    document.getElementById("realname1").value =usr.result.realname;
+                    document.getElementById("ID1").value =usr.result.id;
+                    document.getElementById("UID1").value =usr.result.uid;
+                    document.getElementById("tomon1").value =usr.result.credit2;
+
+                    document.getElementById("imgg").src =usr.result.avatar;
+                }
+            }
+            xmlhttp.open("POST","{php echo mobileUrl('commission.zhuan.tot')}",true);
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send('a='+str);
+        }
+    }
+
+    //转账
+    function zhuan(mon) {
+        if (mon == "") {
+            alert("不可进行空操作");
+        } else {
+            var r = confirm("确定转账？");
+
+            if({$member['credit2']}-mon <0){
+                alert("余额不足");
+            }else{
+                if (r == true) {
+                    var monhttp;
+                    // alert("1");
+                    if (mon.length==0)
+                    {
+                        document.getElementById("txtHint").innerHTML="";
+                        // alert("2");
+                        return;
+                    }
+                    if (window.XMLHttpRequest)
+                    {
+                        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                        monhttp=new XMLHttpRequest();
+                        // alert("3");
+                    }
+                    else
+                    {
+                        // IE6, IE5 浏览器执行代码
+                        monhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                        // alert("4");
+                    }
+                    monhttp.onreadystatechange=function()
+                    {
+                        if (monhttp.readyState==4 && monhttp.status==200)
+                        {
+                            alert("转账成功");
+                            document.getElementById("userr").style.display="none";
+                            document.getElementById("zhuann").style.display="none";
+                            document.getElementById("mon").value="";
+                            location.reload();
+                            // document.getElementById("txtHint").innerHTML = monhttp.responseText;
+                            // alert(mon);
+                        }
+                    }
+                    monhttp.open("POST","{php echo mobileUrl('commission.zhuan.MoneyTo')}",true);
+                    monhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    monhttp.send( 'mon='+ mon +
+                        '& fromid='+{$member['id']}+
+                        '& fromuid='+{$member['uid']}+
+                        '& frommon='+{$member['credit2']}+
+                        '& toid='+ document.getElementById("ID1").value +
+                        '& touid='+document.getElementById("UID1").value+
+                        '& tomon='+document.getElementById("tomon1").value);
+                }
+                else {
+                    alert("本次交易取消");
+                    location.reload();
+                }
+            }
+
+
+
+        }
+    }
+
+</script>
+<div class="fui-page fui-page-current page-commission-index">
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back"></a>
+        </div>
+        <div class="title">{php echo $this->set['texts']['zhuan']}</div>
+    </div>
+
+    <div class='fui-content navbar'>
+        <div class="headinfo">
+            <div class="userinfo" style="height: auto;">
+                <!--个人信息-->
+                <div class='fui-list'>
+                    <div class='fui-list-media'><img src="{$member['avatar']}" /></div>
+                    <div class='fui-list-info' style="width: 12rem">
+                        <div class='title'>{$member['nickname']} </div>
+                        <div class='text' >
+                            当前合币: {$member['credit2']}
+                            <br>
+                            ID: {$member['id']}
+                        </div>
+                    </div>
+                </div>
+                <!--转账信息-->
+                <div class='fui-list' id="userr" style="display: none">
+                    <div class='fui-list-media' style="float: left"><img id="imgg" src="" /></div>
+                    <div class='fui-list-info' style="width: 12rem;float: left">
+                        <div class='title' id="realname">asdfadsf</div>
+                        <div class='title' id="nickname">ff</div>
+                        <div class="text" id="ID"></div>
+                        <div class="text" id="UID" style="display: none"></div>
+                        <div class="text" id="tomon" style="display: none"></div>
+
+                        <div style="display: none">
+                            <input type="text" id="nickname1">
+                            <input type="text" id="realname1">
+                            <input type="text" id="ID1">
+                            <input type="text" id="UID1">
+                            <input type="text" id="tomon1">
+                        </div>
+
+                        <!--转账金额：<input type="text" id="mon" name="mon">-->
+                        <!--<input type="button" value="提交" onclick="zhuan(document.getElementById('mon').value)">-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="userblock" id="zhuann" style="display: none">
+            <div class="line total new">
+               <input type="text" id="mon" name="mon" placeholder="请输入转账金额" style=" width: 80%;height: 55px;font-size: 20px;">
+                <input type="button" value="提交" onclick="zhuan(document.getElementById('mon').value)" style="width: 18%;height: 55px;border: 0px;background-color: #fea23d;font-size: 22px;">
+            </div>
+        </div>
+
+        <div class="userblock">
+            <div class="line total new">
+                <input type="text" name="a" id="uu" placeholder="请输入转账的手机号、ID或姓名" style=" width: 80%;height: 55px;font-size: 20px;">
+                <input type="button" onclick="showHint(document.getElementById('uu').value)" value="查询" style="width: 18%;height: 55px;border: 0px;background-color: #fea23d;font-size: 22px;">
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    <!--<div class="fui-content navbar">-->
+        <!--<div class="search">-->
+                <!--<input type="text" name="a" id="uu" placeholder="请输入转账用户的手机号、ID或姓名" >-->
+                <!--<input type="button" onclick="showHint(document.getElementById('uu').value)" value="查询">-->
+                <!--<br>-->
+                <!--&lt;!&ndash;提交路径：{php echo mobileUrl('commission.zhuan.tot')}&ndash;&gt;-->
+        <!--</div>-->
+<!--<div id="userr" style="display: none">-->
+    <!--<p>提示信息: <span id="txtHint"></span></p>-->
+    <!--<br>-->
+    <!--<span id="txtHnt"></span>-->
+    <!--<br>-->
+    <!--这里显示详细信息:-->
+    <!--<br>-->
+    <!--头像：   <img id="imgg" src="" />-->
+    <!--<br>-->
+    <!--姓名：   <input type="text" id="realname">-->
+    <!--<br>-->
+    <!--昵称：   <input type="text" id="nickname">-->
+    <!--<br>-->
+    <!--id：     <input type="text" id="ID">-->
+    <!--<br>-->
+    <!--uid：     <input type="text" id="UID">-->
+    <!--<br>-->
+    <!--umon：     <input type="text" id="tomon">-->
+    <!--<br>-->
+    <!--转账金额：<input type="text" id="mon" name="mon">-->
+    <!--<input type="button" value="提交" onclick="zhuan(document.getElementById('mon').value)">-->
+<!--</div>-->
+
+    <!--</div>-->
+
+
+{php $this->footerMenus()}
+{template '_footer'}
+

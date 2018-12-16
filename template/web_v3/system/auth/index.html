@@ -1,0 +1,34 @@
+{template '_header'}
+<br />
+<br />
+<div class="page-heading"><h2>系统授权 </h2></div>
+
+
+<form action="" method="post" class="form-horizontal form-validate" enctype="multipart/form-data" >
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">域名</label>
+        <div class="col-sm-9 col-xs-12">
+            <input type="text" name="domain" class="form-control" value="{$domain}" readonly/>
+            <span class="help-block">服务器域名</span>
+        </div>
+    </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">站点IP</label>
+        <div class="col-sm-9 col-xs-12">
+            <input type="text" name="ip" class="form-control" value="{$ip}" readonly/>
+            <span class="help-block">站点IP</span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">授权状态</label>
+        <div class="col-sm-9 col-xs-12">
+            <div class='form-control-static'>
+
+                <span>您的域名已经上报记录，如需获得在线升级请<a href="index.php?c=cloud&amp;a=52jscn_renren" target="_blank">点击此处查看</a></span>            </div>
+        </div>
+    </div>
+</form>
+{template '_footer'}

@@ -1,0 +1,44 @@
+{template '_header'}
+<style>
+
+    .tth{
+        text-align: center;
+        min-width: 100px;
+    }
+
+
+</style>
+<div class="page-header">
+    当前位置：<span class="text-primary">交易管理</span>
+</div>
+<div class="page-content">
+    <label class="col-sm-9 col-xs-12" id = "theone" style="font-size: 20px">点击ID查询详细信息</label>
+    <br>
+    <table border="" cellspacing="" cellpadding="" style="margin: 0 auto">
+        <tr style="font-size: 20px;">
+            <th class="tth">oid</th>
+            <th class="tth">转出人</th>
+            <th class="tth">姓名</th>
+            <th class="tth">转入人</th>
+            <th class="tth">姓名</th>
+            <th class="tth">接收金额</th>
+            <th class="tth">发起时间</th>
+        </tr>
+
+        {loop $list $roo $ro}
+        <tr style="font-size: 20px;">
+            <td class="tth">{$roo}</td>
+            <td class="tth" style="width: 300px"><a href="{php echo webUrl('member.list.detail', array('id' => $ro['formid']))}">{$ro['formid']}</a></td>
+            <td class="tth" style="width: 300px"><a href="{php echo webUrl('member.list.detail', array('id' => $ro['formid']))}">{$ro['realname']}</a></td>
+            <td class="tth" style="width: 300px"><a href="{php echo webUrl('member.list.detail', array('id' => $ro['toid']))}">{$ro['toid']}</a></td>
+            <td class="tth" style="width: 300px"><a href="{php echo webUrl('member.list.detail', array('id' => $ro['toid']))}">{$ro['cname']}</a></td>
+            <td class="tth" style="width: 300px">{$ro['mon']}</td>
+            <td class="thh" style="text-align: center;min-width: 100px;width: 200px" value="">{$ro['time']}</td>
+        </tr>
+        {/loop}
+    </table>
+
+
+
+
+    

@@ -1,0 +1,97 @@
+{template '_header'}
+<div class="page-header">
+    当前位置：<span class="text-primary">申请提现</span>
+</div>
+<div class="page-content">
+<form {ifp 'apply.credit.post'}action="" method="post"{/if} class="form-horizontal form-validate" enctype="multipart/form-data" id="apply_add">
+
+<div class="row">
+    <div class="col-sm-6 ">
+        <div class="summary_box float-e-margins" style="border: 1px solid #e7eaec">
+            <div class="summary_title">
+                {if $item['iscreditmoney']==0}
+                <label class="label label-primary  pull-right" style="margin: 15px 20px 0 0 ">比例{$item['creditrate']}积分：1元 </label>
+                {/if}
+                <span class="text-default title_inner">可提现金额（支付金额+积分兑换的金额）</span>
+            </div>
+            <div class="summary flex">
+                <div class="flex1 flex column">
+                    <h2 class="no-margins yesterday-count text-danger"><span id="bonusmoney_pay">{$item['realprice']}</span> 元</h2>
+                    {if $item['iscreditmoney']==0}
+                    <small>积分兑换金额: {$item['realcreaterate']} 元</small>
+                    {/if}
+                </div >
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6 ">
+        <div class="summary_box float-e-margins" style="border: 1px solid #e7eaec">
+            <div class="summary_title">
+                <span class="text-default title_inner">订单实际消费金额（包括运费）</span>
+            </div>
+            <div class="summary flex">
+                <div class="flex1 flex column">
+                    <h2 class="no-margins yesterday-count text-danger"><span id="">{$item['orderprice']} 元</span> </h2>
+                    <small>订单个数: {$order_num} 个</small>
+                </div >
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{if $item['realprice'] > 0}
+
+<div class="form-group">
+    <label class="col-md control-label">提现方式</label>
+    <div class="col-sm-9 col-xs-12">
+        <select name='applytype' class='form-control' id="applytype" style="width: 220px;">
+            {loop $type_array $key $value}
+            <option value="{$key}" {if !empty($value['checked'])}selected{/if}>{$value['title']}</option>
+            {/loop}
+        </select>
+    </div>
+</div>
+
+{if !empty($type_array[2]) || !empty($type_array[3])}
+<div class="form-group ab-group" {if empty($type_array[2]['checked']) || empty($type_array[3]['checked']) }style="display: none;"{/if}>
+<label class="col-sm-2 control-label">姓名</label>
+<div class="col-sm-9 col-xs-12">
+    <input type="text"id="realname" name="realname" class="form-control" value="{$last_data['applyrealname']}" style="width: 220px;"/>
+</div>
+</div>
+{/if}
+
+{if !empty($type_array[2])}
+<div class="form-group alipay-group" {if empty($type_array[2]['checked'])}style="display: none;"{/if}>
+<label class="col-sm-2 control-label">支付宝帐号</label>
+<div class="col-sm-9 col-xs-12">
+    <input type="text"id="alipay" name="alipay" class="form-control" value="{$last_data['alipay']}" style="width: 220px;"/>
+</div>
+</div>
+
+<div class="form-group alipay-group" {if empty($type_array[2]['checked'])}style="display: none;"{/if}>
+<label class="col-sm-2 control-label">确认帐号</label>
+<div class="col-sm-9 col-xs-12">
+    <input type="text"id="alipay1" name="alipay1" class="form-control" value="{$last_data['alipay']}" style="width: 220px;"/>
+</div>
+</div>
+{/if}
+
+
+{if !empty($type_array[3])}
+<div class="form-group bank-group" {if empty($type_array[3]['checked'])}style="display: none;"{/if}>
+<label class="col-sm-2 control-label">选择银行</label>
+<div class="col-sm-9 col-xs-12">
+    <select name='bankname' class='form-control' id="bankname" style="width: 220px;">
+        {loop $banklist $key $value}
+        <option value="{$value['bankname']}" {if !empty($last_data) && $last_data['bankname'] == $value['bankname']}selected{/if}>{$value['bankname']}</option>
+        {/loop}
+    </select>
+</div>
+</div>
+
+
+<div class="form-group bank-group" {if empty($type_array[3]['checked'])}style="display: none;

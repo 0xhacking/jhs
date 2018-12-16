@@ -1,0 +1,672 @@
+    <form action="" {ife 'commission.level' $level}action="" method="post"{/if}  class="form-horizontal form-validate" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{$level['id']}" />
+         <input type="hidden" name="r" value="commission.level.{if empty($level['id'])}add{else}edit{/if}" />
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">{if !empty($level['id'])}编辑{else}添加{/if}分销商等级</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label must">等级名称</label>
+                    <div class="col-sm-9 col-xs-12">
+                        {ife 'member.level' $level}
+                        <input type="text" name="levelname" class="form-control" value="{$level['levelname']}" data-rule-required='true'/>
+                        {else}
+                        <div class='form-control-static'>{$level['levelname']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                {if $set['level']>=1}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">一级佣金比例</label>
+                          <div class="col-sm-9 col-xs-12">
+                            {ife 'member.level' $level}
+                                                            <div class='input-group'>
+                        <input type="text" name="commission1" class="form-control" value="{$level['commission1']}" />
+                            <div class='input-group-addon'>%</div>
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['commission1']}%</div>
+                        {/if} 
+                    </div>
+                </div>
+                {/if}
+                  {if $set['level']>=2}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">二级佣金比例</label>
+                         <div class="col-sm-9 col-xs-12">
+                       {ife 'member.level' $level}
+                       <div class='input-group'>
+                        <input type="text" name="commission2" class="form-control" value="{$level['commission2']}" />
+                        <div class='input-group-addon'>%</div>
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['commission2']}%</div>
+                        {/if} 
+                    </div>
+                </div>
+                    {/if}
+                  {if $set['level']>=3}
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">三级佣金比例</label>
+                          <div class="col-sm-9 col-xs-12">
+                      {ife 'member.level' $level}
+                          <div class='input-group'>
+                        <input type="text" name="commission3" class="form-control" value="{$level['commission3']}" />
+                          <div class='input-group-addon'>%</div>
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['commission3']}%</div>
+                        {/if} 
+                    </div>
+                </div>
+                    {/if}
+                    {if $level['id']!='default'}
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">升级条件</label>
+                    <div class="col-sm-9 col-xs-12">
+                            {ife 'member.level' $level}
+                        <div class='input-group'>
+                            {if $leveltype==0}
+                                    <span class='input-group-addon'>分销订单金额满</span>
+                                    <input type="text" name="ordermoney" class="form-control" value="{$level['ordermoney']}" />
+                                    <span class='input-group-addon'>元</span>
+                                 
+                            {/if}
+                            
+                            {if $leveltype==1}
+                                    <span class='input-group-addon'>一级分销订单金额满</span>
+                                    <input type="text" name="ordermoney" class="form-control" value="{$level['ordermoney']}" />
+                                    <span class='input-group-addon'>元</span>
+                            {/if}
+                             
+                            
+                            {if $leveltype==2}
+                                    <span class='input-group-addon'>分销订单数量满</span>
+                                    <input type="text" name="ordercount" class="form-control" value="{$level['ordercount']}" />
+                                    <span class='input-group-addon'>个</span>
+                            {/if}
+                            
+                            {if $leveltype==3}
+                                    <span class='input-group-addon'>一级分销订单数量满</span>
+                                    <input type="text" name="ordercount" class="form-control" value="{$level['ordercount']}" />
+                                    <span class='input-group-addon'>个</span>
+                            {/if}
+                            
+                            {if $leveltype==4}
+                                    <span class='input-group-addon'>自购订单金额满</span>
+                                    <input type="text" name="ordermoney" class="form-control" value="{$level['ordermoney']}" />
+                                    <span class='input-group-addon'>元</span>
+                            {/if}
+                            
+                            {if $leveltype==5}
+                                    <span class='input-group-addon'>自购订单数量满</span>
+                                    <input type="text" name="ordercount" class="form-control" value="{$level['ordercount']}" />
+                                    <span class='input-group-addon'>个</span>
+                            {/if}
+                            {if $leveltype==6}
+                                    <span class='input-group-addon'>下级总人数满</span>
+                                    <input type="text" name="downcount" class="form-control" value="{$level['downcount']}" />
+                                    <span class='input-group-addon'>个（分销商+非分销商）</span>
+                            {/if}
+                            {if $leveltype==7}
+                                    <span class='input-group-addon'>一级下级人数满</span>
+                                    <input type="text" name="downcount" class="form-control" value="{$level['downcount']}" />
+                                    <span class='input-group-addon'>个（分销商+非分销商）</span>
+                            {/if}
+                            {if $leveltype==8}
+                                    <span class='input-group-addon'>团队总人数满</span>
+                                    <input type="text" name="downcount" class="form-control" value="{$level['downcount']}" />
+                                    <span class='input-group-addon'>个（分销商）</span>
+                            {/if}
+                            {if $leveltype==9}
+                                    <span class='input-group-addon'>一级团队人数满</span>
+                                    <input type="text" name="downcount" class="form-control" value="{$level['downcount']}" />
+                                    <span class='input-group-addon'>个（分销商）</span>
+                            {/if}
+                             
+                            {if $leveltype==10}
+                                    <span class='input-group-addon'>已提现佣金总金额满</span>
+                                    <input type="text" name="commissionmoney" class="form-control" value="{$level['commissionmoney']}" />
+                                    <span class='input-group-addon'>元</span>
+                            {/if}
+                            
+                            
+                        </div>
+                        <span class='help-block'>分销商升级条件，不填写默认为不自动升级</span>
+                        
+                        {else}
+                        
+                                  {if $leveltype==0}
+                                     分销订单金额满 {$level['ordermoney']} 元
+                            {/if}
+                            
+                            {if $leveltype==1}
+                                                  一级分销订单金额满 {$level['ordermoney']} 元
+                            {/if}
+                            {if $leveltype==2}
+                                                分销订单数量满 {$level['ordercount']} 个
+                            {/if}
+                            
+                            {if $leveltype==3}
+                                            一级分销订单数量满 {$level['ordercount']} 个
+                            {/if}
+                            
+                            {if $leveltype==4}
+                                   自购订单金额满 {$level['ordermoney']} 元
+                             {/if}
+                            
+                            {if $leveltype==5}
+                                               自购订单数量满 {$level['ordercount']} 个
+                            {/if}
+                            {if $leveltype==6}
+                             下级总人数满 {$level['downcount']} 个（分销商+非分销商）
+                                     
+                            {/if}
+                            {if $leveltype==7}
+                            一级下级人数满 {$level['downcount']} 个（分销商+非分销商）
+                                     
+                            {/if}
+                            {if $leveltype==8}
+                                团队总人数满 {$level['downcount']} 个（分销商）
+                            {/if}
+                            {if $leveltype==9}
+                                      一级团队人数满 {$level['downcount']} 个（分销商）
+                            {/if}
+                             
+                            {if $leveltype==10}
+                                      已提现佣金总金额满 {$level['commissionmoney']} 元
+                            {/if}
+                        
+                        {/if}
+                    </div>
+                </div>
+                    {/if}
+                
+               <div class="form-group">
+                    <label class="col-sm-2 control-label">建点奖</label>
+                         <div class="col-sm-9 col-xs-12">
+                       {ife 'member.level' $level}
+                       <div class='input-group'>
+                        <input type="text" name="jian" class="form-control" value="{$level['jian']}" />
+                        <div class='input-group-addon'>%</div>
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['jian']}%</div>
+                        {/if} 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">领导奖</label>
+                </div>
+                <div class="form-group-">
+                    <label class="col-sm-2 control-label"></label>
+                    <label class="col-sm-3 control-label">金额</label>
+                    <label class="col-sm-3 control-label">价格下限(元)</label>
+                    <label class="col-sm-3 control-label">价格上限(元)</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">一级商品</label>
+                        <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling1money" class="form-control" value="{$level['ling1money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling1money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling1down" class="form-control" value="{$level['ling1down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling1down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling1up" class="form-control" value="{$level['ling1up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling1up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-2 control-label">二级商品</label>
+                        <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling2money" class="form-control" value="{$level['ling2money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling2money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling2down" class="form-control" value="{$level['ling2down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling2down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling2up" class="form-control" value="{$level['ling2up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling2up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-2 control-label">三级商品</label>
+                        <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling3money" class="form-control" value="{$level['ling3money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling3money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling3down" class="form-control" value="{$level['ling3down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling3down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling3up" class="form-control" value="{$level['ling3up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling3up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-2 control-label">四级商品</label>
+                        <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling4money" class="form-control" value="{$level['ling4money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling4money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling4down" class="form-control" value="{$level['ling4down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling4down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-3 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ling4up" class="form-control" value="{$level['ling4up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ling4up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12">平级推荐设置</label>
+                </div>
+                <div class="form-group-">
+                    <label class="col-sm-2 control-label"></label>
+                    <label class="col-sm-2 control-label">1级</label>
+                    <label class="col-sm-2 control-label">2级</label>
+                    <label class="col-sm-2 control-label">3级</label>
+                    <label class="col-sm-2 control-label">价格下限(元)</label>
+                    <label class="col-sm-2 control-label">价格上限(元)</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">一级商品</label>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping1money" class="form-control" value="{$level['ping1money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping1money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping1money2" class="form-control" value="{$level['ping1money2']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping1money2']}</div>
+                         {/if} 
+                     </div>
+                     <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping1money3" class="form-control" value="{$level['ping1money3']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping1money3']}</div>
+                         {/if} 
+                     </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping1down" class="form-control" value="{$level['ping1down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping1down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping1up" class="form-control" value="{$level['ping1up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping1up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">二级商品</label>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping2money" class="form-control" value="{$level['ping2money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping2money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping2money2" class="form-control" value="{$level['ping2money2']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping2money2']}</div>
+                         {/if} 
+                     </div>
+                     <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping2money3" class="form-control" value="{$level['ping2money3']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping2money3']}</div>
+                         {/if} 
+                     </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping2down" class="form-control" value="{$level['ping2down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping2down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping2up" class="form-control" value="{$level['ping2up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping2up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">三级商品</label>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping3money" class="form-control" value="{$level['ping3money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping3money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping3money2" class="form-control" value="{$level['ping3money2']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping3money2']}</div>
+                         {/if} 
+                     </div>
+                     <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping3money3" class="form-control" value="{$level['ping3money3']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping3money3']}</div>
+                         {/if} 
+                     </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping3down" class="form-control" value="{$level['ping3down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping3down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping3up" class="form-control" value="{$level['ping3up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping3up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">四级商品</label>
+                    <div class="col-sm-2 col-xs-1">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping4money" class="form-control" value="{$level['ping4money']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping4money']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-1">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping4money2" class="form-control" value="{$level['ping4money2']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping4money2']}</div>
+                         {/if} 
+                     </div>
+                     <div class="col-sm-2 col-xs-1">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ping4money3" class="form-control" value="{$level['ping4money3']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ping4money3']}</div>
+                         {/if} 
+                     </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping4down" class="form-control" value="{$level['ping4down']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping4down']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ping4up" class="form-control" value="{$level['ping4up']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping4up']}</div>
+                        {/if} 
+                    </div>
+                </div>
+               <!--  <div class="form-group">
+                    <label class="col-sm-2 control-label">一级平级推荐</label>
+                         <div class="col-sm-9 col-xs-12">
+                       {ife 'member.level' $level}
+                       <div class='input-group'>
+                        <input type="text" name="ping1" class="form-control" value="{$level['ping1']}"/>
+                        <div class='input-group-addon'>元</div> 
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping1']}元</div>
+                        {/if} 
+                    </div>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label class="col-sm-2 control-label">二级平级推荐</label>
+                         <div class="col-sm-9 col-xs-12">
+                       {ife 'member.level' $level}
+                       <div class='input-group'>
+                        <input type="text" name="ping2" class="form-control" value="{$level['ping2']}" />
+                        <div class='input-group-addon'>元</div>
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping2']}元</div>
+                        {/if} 
+                    </div>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label class="col-sm-2 control-label">三级平级推荐</label>
+                         <div class="col-sm-9 col-xs-12">
+                       {ife 'member.level' $level}
+                       <div class='input-group'>
+                        <input type="text" name="ping3" class="form-control" value="{$level['ping3']}" />
+                        <div class='input-group-addon'>元</div>
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ping3']}元</div>
+                        {/if} 
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="col-sm-12">非套餐商品设置</label>
+                </div>
+                <div class="form-group">  
+                    <label class="col-sm-2 control-label">1级</label>
+                    <label class="col-sm-2 control-label">2级</label>
+                    <label class="col-sm-2 control-label">3级</label>
+                    <label class="col-sm-2 control-label">4级</label>
+                </div>
+                <div class="form-group">  
+                    <label class="col-sm-2 control-label">5级</label>
+                    <label class="col-sm-2 control-label">6级</label>
+                    <label class="col-sm-2 control-label">7级</label>
+                    <label class="col-sm-2 control-label">8级</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ntc1" class="form-control" value="{$level['ntc1']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ntc1']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ntc2" class="form-control" value="{$level['ntc2']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ntc2']}</div>
+                         {/if} 
+                     </div>
+                     <div class="col-sm-2 col-xs-4">
+                        {ife 'member.level' $level}
+                         <div class='input-group'>
+                         <input type="text" name="ntc3" class="form-control" value="{$level['ntc3']}" />
+                         </div>
+                         {else}
+                         <div class='form-control-static'>{$level['ntc3']}</div>
+                         {/if} 
+                     </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ntc4" class="form-control" value="{$level['ntc4']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ntc4']}</div>
+                        {/if} 
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ntc5" class="form-control" value="{$level['ntc5']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ntc5']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ntc6" class="form-control" value="{$level['ntc6']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ntc6']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ntc7" class="form-control" value="{$level['ntc7']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ntc7']}</div>
+                        {/if} 
+                    </div>
+                    <div class="col-sm-2 col-xs-4">
+                       {ife 'member.level' $level}
+                        <div class='input-group'>
+                        <input type="text" name="ntc8" class="form-control" value="{$level['ntc8']}" />
+                        </div>
+                        {else}
+                        <div class='form-control-static'>{$level['ntc8']}</div>
+                        {/if} 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit">提交</button>
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--青岛易联互动网络科技有限公司-->

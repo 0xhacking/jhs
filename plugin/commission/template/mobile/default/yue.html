@@ -1,0 +1,76 @@
+{template '_header'}
+{template 'commission/common'}
+<style>
+    @font-face {
+        font-family: 'one';   /*字体名称*/
+        src: url("http://www.hljjhssm.com/font/01.ttf");       /*字体源文件*/
+    }
+    .yue{
+        margin-top: -3rem;
+        /*margin-left:14%;*/
+        font-size: 22px;
+        height: 3.15rem ;
+        background: rgba(0,0,0,0);
+        text-align: center;
+        color: #fea23d;
+        padding-top: 4%;
+        width: 33%;
+    }
+    .aa{
+        float: left;
+        /*margin-left: 14%;*/
+        width: 33%;
+        text-align: center;
+        font-size: 20px;
+    }
+</style>
+
+<div class="fui-page fui-page-current page-commission-index">
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back"></a>
+        </div>
+        <div class="title">{php echo $this->set['texts']['yue']}</div>
+    </div>
+
+    <div class='fui-content navbar'>
+        <div class="headinfo" style="position: fixed;width: 100%">
+            <div class="userinfo" style="height: auto;">
+                <!--个人信息-->
+                <div class='fui-list'>
+                    <div class='fui-list-media'><img src="{$member['avatar']}" /></div>
+                    <div class='fui-list-info' style="width: 12rem">
+                        <div class='title'>{$member['nickname']} </div>
+                        <div class='text' >
+                            当前合币: {$member['credit2']}{$zy}
+                            <br>
+                            ID: {$member['id']}
+                            <br>
+                            审核中月分红: {$member['monthmoney_old_no']}
+                            <br>
+                            累计已发放: {$member['monthmoney_old']}
+                            <br>
+                            累计已提现: {$member['monthmoney_ok']}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="background-color: #fff; width: 100%; height: 33px; border-bottom: 1px solid;">
+                <div>
+                    <div class="aa">分红金额</div>
+                    <div class="aa">分红月份</div>
+                    <div class="aa">是否提现</div>
+                </div>
+            </div>
+        </div>
+
+    <div style="margin-top:207px;position: initial;">
+        {php echo $tt;}
+    </div>
+
+
+    </div>
+
+</div>
+{php $this->footerMenus()}
+{template '_footer'}

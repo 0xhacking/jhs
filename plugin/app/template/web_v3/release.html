@@ -1,0 +1,44 @@
+{template '_header'}
+
+<link href="../addons/ewei_shopv2/plugin/app/static/css/page.css?v=20170922" rel="stylesheet" type="text/css"/>
+
+<style type="text/css">
+    .jconfirm.jconfirm-white .jconfirm-box .buttons button {font-size: 12px; font-weight: normal;}
+    .summary_lg {padding: 35px 30px;}
+    .summary_lg p {font-size: 15px; line-height: 28px;}
+</style>
+
+<div class="page-header">
+    当前位置：
+    <span class="text-primary">发布与审核</span>
+</div>
+
+<div class="page-content">
+    {template 'app/_tab'}
+
+
+    <div class="alert alert-primary">
+        <p style="font-size:16px"><b>小程序发布流程</b></p>
+        <p style="font-size:16px">1.首先取得授权后在当前页面下载小程序前端,<a href="http://bbs.52jscn.com/vip.html" target="_blank">购买锦尚中国终身VIP会员</a>或者<a href="http://mofang.52jscn.com" target="_blank">购买微信魔方授权</a>均可下载;</p>
+        <p style="font-size:16px">2.用微信开发工具创建小程序项目(<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html" target="_blank">微信开发工具下载</a>);</p>
+        <p style="font-size:16px">3.修改小程序项目中的</p>
+        <p style="font-size:16px">4.上传审核：微信开发工具直接上传审核，等待腾讯审核通过后就可以使用了,审核期间可以通过管理员在小程序平台扫码查看小程序效果</p>
+    </div>
+
+    <div class="wxapp-detail">
+        <div class="logo">
+            <img src="{$release['xcx_head_img']}" onerror="this.src='../addons/ewei_shopv2/static/images/app.jpg'"  />
+        </div>
+
+
+
+        <div style="width:398px;height:398px;overflow:hidden;">
+        <iFrame src="/web/index.php?c=cloud&a=52jscn_renren_xiaochengxu" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iFrame>
+        </div>
+
+
+    </div>
+
+
+</div>
+{template '_footer'}
