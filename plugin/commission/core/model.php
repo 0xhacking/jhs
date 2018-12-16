@@ -19,17 +19,49 @@ if( !class_exists("CommissionModel") )
 		public function getSet($uniacid = 0) 
 		{
 			$set = parent::getSet($uniacid);
-			$set["texts"] = array( "agent" => (empty($set["texts"]["agent"]) ? "分销商" : $set["texts"]["agent"]), 
-				"totleforme" => (empty($set["texts"]["totleforme"]) ? "我的业绩" : $set["texts"]["totleforme"]),
-                "zhuan" => (empty($set["texts"]["zhuan"]) ? "合币交易" : $set["texts"]["zhuan"]),
-                //v1.015 start
-                "yue" => (empty($set["texts"]["yue"]) ? "月分红明细" : $set["texts"]["yue"]),
-                //v1.015 end
-				"tui" => (empty($set["texts"]["tui"]) ? "分红明细" : $set["texts"]["tui"]),
-				"shop" => (empty($set["texts"]["shop"]) ? "小店" : $set["texts"]["shop"]), "myshop" => (empty($set["texts"]["myshop"]) ? "我的小店" : $set["texts"]["myshop"]), "center" => (empty($set["texts"]["center"]) ? "分销中心" : $set["texts"]["center"]), "become" => (empty($set["texts"]["become"]) ? "成为分销商" : $set["texts"]["become"]), "withdraw" => (empty($set["texts"]["withdraw"]) ? "提现" : $set["texts"]["withdraw"]), "commission" => (empty($set["texts"]["commission"]) ? "佣金" : $set["texts"]["commission"]), "commission1" => (empty($set["texts"]["commission1"]) ? "分销佣金" : $set["texts"]["commission1"]), "commission_total" => (empty($set["texts"]["commission_total"]) ? "累计佣金" : $set["texts"]["commission_total"]), "commission_ok" => (empty($set["texts"]["commission_ok"]) ? "可提现佣金" : $set["texts"]["commission_ok"]), "commission_apply" => (empty($set["texts"]["commission_apply"]) ? "已申请佣金" : $set["texts"]["commission_apply"]), "commission_check" => (empty($set["texts"]["commission_check"]) ? "待打款佣金" : $set["texts"]["commission_check"]), "commission_lock" => (empty($set["texts"]["commission_lock"]) ? "未结算佣金" : $set["texts"]["commission_lock"]), "commission_detail" => (empty($set["texts"]["commission_detail"]) ? "提现明细" : ($set["texts"]["commission_detail"] == "佣金明细" ? "提现明细" : $set["texts"]["commission_detail"])), "commission_pay" => (empty($set["texts"]["commission_pay"]) ? "成功提现佣金" : $set["texts"]["commission_pay"]), "commission_wait" => (empty($set["texts"]["commission_wait"]) ? "待收货佣金" : $set["texts"]["commission_wait"]), "commission_fail" => (empty($set["texts"]["commission_fail"]) ? "无效佣金" : $set["texts"]["commission_fail"]), "commission_charge" => (empty($set["texts"]["commission_charge"]) ? "扣除提现手续费" : $set["texts"]["commission_charge"]), "order" => (empty($set["texts"]["order"]) ? "分销订单" : $set["texts"]["order"]), "c1" => (empty($set["texts"]["c1"]) ? "一级" : $set["texts"]["c1"]), "c2" => (empty($set["texts"]["c2"]) ? "二级" : $set["texts"]["c2"]), "c3" => (empty($set["texts"]["c3"]) ? "三级" : $set["texts"]["c3"]), "c4" => (empty($set["texts"]["c4"]) ? "四级" : $set["texts"]["c4"]),"c5" => (empty($set["texts"]["c5"]) ? "五级" : $set["texts"]["c5"]),
-                "c6" => (empty($set["texts"]["c6"]) ? "六级" : $set["texts"]["c6"]),
-                "c7" => (empty($set["texts"]["c7"]) ? "七级" : $set["texts"]["c7"]),
-                "c8" => (empty($set["texts"]["c8"]) ? "八级" : $set["texts"]["c8"]),"mydown" => (empty($set["texts"]["mydown"]) ? "我的下线" : $set["texts"]["mydown"]), "down" => (empty($set["texts"]["down"]) ? "下线" : $set["texts"]["down"]), "up" => (empty($set["texts"]["up"]) ? "推荐人" : $set["texts"]["up"]), "yuan" => (empty($set["texts"]["yuan"]) ? "元" : $set["texts"]["yuan"]), "icode" => (empty($set["texts"]["icode"]) ? "邀请码" : $set["texts"]["icode"]),"jiedianren"=>(empty($set["texts"]["jiedianren"])?"接点人":$set["texts"]["jiedianren"]) ,
+			$set["texts"] = array(
+                    "agent" => (empty($set["texts"]["agent"]) ? "分销商" : $set["texts"]["agent"]),
+                    "totleforme" => (empty($set["texts"]["totleforme"]) ? "我的业绩" : $set["texts"]["totleforme"]),
+                    "zhuan" => (empty($set["texts"]["zhuan"]) ? "合币交易" : $set["texts"]["zhuan"]),
+                    //v1.015 start
+                    "yue" => (empty($set["texts"]["yue"]) ? "月分红明细" : $set["texts"]["yue"]),
+                    //v1.015 end
+                    //v1.011 start
+                    "zhou" => (empty($set["texts"]["zhou"])?"周分红明细":$set["text"]["zhou"]),
+                    //v1.011 end
+                    "tui" => (empty($set["texts"]["tui"]) ? "分红明细" : $set["texts"]["tui"]),
+                    "shop" => (empty($set["texts"]["shop"]) ? "小店" : $set["texts"]["shop"]),
+                    "myshop" => (empty($set["texts"]["myshop"]) ? "我的小店" : $set["texts"]["myshop"]),
+                    "center" => (empty($set["texts"]["center"]) ? "分销中心" : $set["texts"]["center"]),
+                    "become" => (empty($set["texts"]["become"]) ? "成为分销商" : $set["texts"]["become"]),
+                    "withdraw" => (empty($set["texts"]["withdraw"]) ? "提现" : $set["texts"]["withdraw"]),
+                    "commission" => (empty($set["texts"]["commission"]) ? "佣金" : $set["texts"]["commission"]),
+                    "commission1" => (empty($set["texts"]["commission1"]) ? "分销佣金" : $set["texts"]["commission1"]),
+                    "commission_total" => (empty($set["texts"]["commission_total"]) ? "累计佣金" : $set["texts"]["commission_total"]),
+                    "commission_ok" => (empty($set["texts"]["commission_ok"]) ? "可提现佣金" : $set["texts"]["commission_ok"]),
+                    "commission_apply" => (empty($set["texts"]["commission_apply"]) ? "已申请佣金" : $set["texts"]["commission_apply"]),
+                    "commission_check" => (empty($set["texts"]["commission_check"]) ? "待打款佣金" : $set["texts"]["commission_check"]),
+                    "commission_lock" => (empty($set["texts"]["commission_lock"]) ? "未结算佣金" : $set["texts"]["commission_lock"]),
+                    "commission_detail" => (empty($set["texts"]["commission_detail"]) ? "提现明细" : ($set["texts"]["commission_detail"] == "佣金明细" ? "提现明细" : $set["texts"]["commission_detail"])),
+                    "commission_pay" => (empty($set["texts"]["commission_pay"]) ? "成功提现佣金" : $set["texts"]["commission_pay"]),
+                    "commission_wait" => (empty($set["texts"]["commission_wait"]) ? "待收货佣金" : $set["texts"]["commission_wait"]),
+                    "commission_fail" => (empty($set["texts"]["commission_fail"]) ? "无效佣金" : $set["texts"]["commission_fail"]),
+                    "commission_charge" => (empty($set["texts"]["commission_charge"]) ? "扣除提现手续费" : $set["texts"]["commission_charge"]),
+                    "order" => (empty($set["texts"]["order"]) ? "分销订单" : $set["texts"]["order"]),
+                    "c1" => (empty($set["texts"]["c1"]) ? "一级" : $set["texts"]["c1"]),
+                    "c2" => (empty($set["texts"]["c2"]) ? "二级" : $set["texts"]["c2"]),
+                    "c3" => (empty($set["texts"]["c3"]) ? "三级" : $set["texts"]["c3"]),
+                    "c4" => (empty($set["texts"]["c4"]) ? "四级" : $set["texts"]["c4"]),
+                    "c5" => (empty($set["texts"]["c5"]) ? "五级" : $set["texts"]["c5"]),
+                    "c6" => (empty($set["texts"]["c6"]) ? "六级" : $set["texts"]["c6"]),
+                    "c7" => (empty($set["texts"]["c7"]) ? "七级" : $set["texts"]["c7"]),
+                    "c8" => (empty($set["texts"]["c8"]) ? "八级" : $set["texts"]["c8"]),
+                    "mydown" => (empty($set["texts"]["mydown"]) ? "我的下线" : $set["texts"]["mydown"]),
+                    "down" => (empty($set["texts"]["down"]) ? "下线" : $set["texts"]["down"]),
+                    "up" => (empty($set["texts"]["up"]) ? "推荐人" : $set["texts"]["up"]),
+                    "yuan" => (empty($set["texts"]["yuan"]) ? "元" : $set["texts"]["yuan"]),
+                    "icode" => (empty($set["texts"]["icode"]) ? "邀请码" : $set["texts"]["icode"]),
+                    "jiedianren"=>(empty($set["texts"]["jiedianren"])?"接点人":$set["texts"]["jiedianren"]) ,
                 	"MyDividend"=>(empty($set["texts"]["MyDividend"])?"我的分红":$set["texts"]["MyDividend"])
             );
 			return $set;
@@ -290,14 +322,13 @@ if( !class_exists("CommissionModel") )
                                         $tot = $cinfo["total"];
                                     //获取购买单价
                                         $marketprice = $cinfo["marketprice"];
-
 								    //判断是不是消费商
 									if ($l0["levelname"]=="高级消费商" or $l0["levelname"]=="消费股东" or $l0["levelname"]=="公司合伙人") {
-//									    v1.008 start
+                                    //  v1.008 start
                                         if ($cinfo["marketprice"]>$l1["ping1down"] && $cinfo["marketprice"]<=$l1["ping1up"]) {
                                             $money = $l1["ping1money"] * $tot;
                                         }
-//                                        v1.008 end
+                                    //  v1.008 end
 //										if ($cinfo["realprice"]>$l1["ping1down"] && $cinfo["realprice"]<=$l1["ping1up"]) {
 //											$money = $l1["ping1money"];
 //										}
@@ -595,7 +626,6 @@ if( !class_exists("CommissionModel") )
 			$data["level3_commission_total"] = $level3_commission_total;
 			return $data;
 		}
-		//
 		//获取我下线的所有业绩和
 		public function GetTotalforme($agentid){
 			$totleforme=0;
@@ -828,7 +858,7 @@ if( !class_exists("CommissionModel") )
         	pdo_update("ewei_shop_member",array("weekaddsum"=>$totalforme,"weeknum"=>date('w')),array("id"=>$agentid));
 			return $totalforme;
 		}
-		//
+		//获取用户信息
 		public function getInfo($openid, $options = NULL)
 		{
 			if( empty($options) || !is_array($options) )
@@ -885,7 +915,7 @@ if( !class_exists("CommissionModel") )
 			$order13money = 0;
 			$order23money = 0;
 			$order33money = 0;
-
+            //获取我下线的所有业绩和
 			$totleforme = $this->GetTotalforme($member["id"]);
 			//$member["weekmoney"] = $this->GetWeekGlons($member["id"]);//计算周分红
 			if( 1 <= $level )
@@ -1305,10 +1335,6 @@ if( !class_exists("CommissionModel") )
 				$level3 = count($level3_agentids);
 				$agentcount += $level3;
 			}
-
-
-
-
 			if (0<$level3) {
 				if( in_array("total", $options) )
 				{
@@ -1411,7 +1437,7 @@ if( !class_exists("CommissionModel") )
 				$level4 = count($level4_agentids);
 				// $agentcount += $level4;
 			}
-		  if (0<$level4) {
+		    if (0<$level4) {
 				if( in_array("total", $options) )
 				{
 				  $level5_commissions = pdo_fetchall("select og.commissionlead from " . tablename("ewei_shop_order_goods") . " og " . " left join  " . tablename("ewei_shop_order") . " o on o.id = og.orderid" . " where o.agentid in( " . implode(",", array_keys($level4_agentids)) . ")  and o.status>=1 and og.nocommission=0 and o.uniacid=:uniacid and o.isparent=0", array( ":uniacid" => $_W["uniacid"] ));
@@ -1796,10 +1822,6 @@ if( !class_exists("CommissionModel") )
 				//$memeber["weeknum"]=date('W',time());
 			//}
 
-
-
-
-
 			$member["agentcount"] = $agentcount;
 			$member["ordercount"] = $ordercount;
 			$member["ordermoney"] = $ordermoney;
@@ -1845,34 +1867,23 @@ if( !class_exists("CommissionModel") )
              * monthmoney_old_no  待审核月分红
              **/
 				$member["commission_ok"] = $commission_ok + ($member['monthmoney_zhuangtai']==0 ? $member["monthymoney"] : 0 );
-
 				$member["commission_old_no"] = $member["monthmoney_old_no"] + $member["monthmoney_ok"];
-
                     //v1.009 start 显示可提现金额
                         $member["commission_apply_can"] = $commission_ok + ($member["monthmoney_zhuangtai"]==0 ? $member["monthymoney"] : 0 ) ;
                     //v1.009 end
-
 				// v1.003 end
-
                 //v1.015 start
                     $can_apply_monthmoney = pdo_fetchall("select * from ".tablename("ewei_shop_monthmoney")." where uid = ".$member['id']);
                 //v1.015 end
-
-
 			// v1.002 end
-
 			$member["commission_lock"] = $commission_lock;
-
 			// v1.003 start
 			//$member["commission_apply_a"]  已申请奖金 不包含月分红
-            
 			$member["commission_apply"] = $commission_apply + ($member["monthmoney_zhuangtai"]==1 ? $member["monthmoney_old_no"] : 0 );
-
 			$member["commission_check"] = $commission_check + ($member["monthmoney_zhuangtai"]==2 ? $member["monthmoney_old_no"] : 0 );
 			$member["commission_pay"] = $commission_pay + $member["monthmoney_ok"];
 			$member["commission_apply_a"] = $commission_apply;
 			// v1.003 end
-
 			$member["commission_wait"] = round($commission_wait, 2);
             /**
              * $member['order_ok'] 已结算订单
@@ -1883,8 +1894,7 @@ if( !class_exists("CommissionModel") )
             //查询用户提现表所有信息
             $member['order_w'] = $member['commission_total'] - $member["commission_wait"] - $member['monthmoney_ok'];
             //c1.000 end
-             $member['order_ok']=$member["commission_wait"];
-
+            $member['order_ok']=$member["commission_wait"];
 			$member["commission_fail"] = round($commission_fail, 2);
 			$member["level1"] = $level1;
 			$member["level1_agentids"] = $level1_agentids;
