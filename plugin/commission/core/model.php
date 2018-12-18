@@ -3,6 +3,9 @@
 	exit( "Access Denied" );
 }
 // 本页做为分销功能模型
+/*
+ * 包含周、月分红，平级奖，领导奖，非套餐区奖金，各种明细
+ * */
 define("TM_COMMISSION_AGENT_NEW", "TM_COMMISSION_AGENT_NEW");
 define("TM_COMMISSION_ORDER_PAY", "TM_COMMISSION_ORDER_PAY");
 define("TM_COMMISSION_ORDER_FINISH", "TM_COMMISSION_ORDER_FINISH");
@@ -35,17 +38,17 @@ if( !class_exists("CommissionModel") )
                     "center" => (empty($set["texts"]["center"]) ? "分销中心" : $set["texts"]["center"]),
                     "become" => (empty($set["texts"]["become"]) ? "成为分销商" : $set["texts"]["become"]),
                     "withdraw" => (empty($set["texts"]["withdraw"]) ? "提现" : $set["texts"]["withdraw"]),
-                    "commission" => (empty($set["texts"]["commission"]) ? "佣金" : $set["texts"]["commission"]),
-                    "commission1" => (empty($set["texts"]["commission1"]) ? "分销佣金" : $set["texts"]["commission1"]),
-                    "commission_total" => (empty($set["texts"]["commission_total"]) ? "累计佣金" : $set["texts"]["commission_total"]),
-                    "commission_ok" => (empty($set["texts"]["commission_ok"]) ? "可提现佣金" : $set["texts"]["commission_ok"]),
-                    "commission_apply" => (empty($set["texts"]["commission_apply"]) ? "已申请佣金" : $set["texts"]["commission_apply"]),
-                    "commission_check" => (empty($set["texts"]["commission_check"]) ? "待打款佣金" : $set["texts"]["commission_check"]),
-                    "commission_lock" => (empty($set["texts"]["commission_lock"]) ? "未结算佣金" : $set["texts"]["commission_lock"]),
-                    "commission_detail" => (empty($set["texts"]["commission_detail"]) ? "提现明细" : ($set["texts"]["commission_detail"] == "佣金明细" ? "提现明细" : $set["texts"]["commission_detail"])),
-                    "commission_pay" => (empty($set["texts"]["commission_pay"]) ? "成功提现佣金" : $set["texts"]["commission_pay"]),
-                    "commission_wait" => (empty($set["texts"]["commission_wait"]) ? "待收货佣金" : $set["texts"]["commission_wait"]),
-                    "commission_fail" => (empty($set["texts"]["commission_fail"]) ? "无效佣金" : $set["texts"]["commission_fail"]),
+                    "commission" => (empty($set["texts"]["commission"]) ? "奖金" : $set["texts"]["commission"]),
+                    "commission1" => (empty($set["texts"]["commission1"]) ? "分销奖金" : $set["texts"]["commission1"]),
+                    "commission_total" => (empty($set["texts"]["commission_total"]) ? "累计奖金" : $set["texts"]["commission_total"]),
+                    "commission_ok" => (empty($set["texts"]["commission_ok"]) ? "可提现奖金" : $set["texts"]["commission_ok"]),
+                    "commission_apply" => (empty($set["texts"]["commission_apply"]) ? "已申请奖金" : $set["texts"]["commission_apply"]),
+                    "commission_check" => (empty($set["texts"]["commission_check"]) ? "待打款奖金" : $set["texts"]["commission_check"]),
+                    "commission_lock" => (empty($set["texts"]["commission_lock"]) ? "未结算奖金" : $set["texts"]["commission_lock"]),
+                    "commission_detail" => (empty($set["texts"]["commission_detail"]) ? "提现明细" : ($set["texts"]["commission_detail"] == "奖金明细" ? "提现明细" : $set["texts"]["commission_detail"])),
+                    "commission_pay" => (empty($set["texts"]["commission_pay"]) ? "成功提现奖金" : $set["texts"]["commission_pay"]),
+                    "commission_wait" => (empty($set["texts"]["commission_wait"]) ? "待收货奖金" : $set["texts"]["commission_wait"]),
+                    "commission_fail" => (empty($set["texts"]["commission_fail"]) ? "无效奖金" : $set["texts"]["commission_fail"]),
                     "commission_charge" => (empty($set["texts"]["commission_charge"]) ? "扣除提现手续费" : $set["texts"]["commission_charge"]),
                     "order" => (empty($set["texts"]["order"]) ? "分销订单" : $set["texts"]["order"]),
                     "c1" => (empty($set["texts"]["c1"]) ? "一级" : $set["texts"]["c1"]),
@@ -686,7 +689,8 @@ if( !class_exists("CommissionModel") )
 			} while (count($allmember)>0);
 			return $totleforme;
 		}
-		//获取某人的上周的个人业绩
+		//获取某人的/*上周的个人业绩*/
+                //累计产生的业绩
 		public function GetTotalformByWeekById($id){
 			global $_W;
 			$member = m("member")->getMember($id);
@@ -695,7 +699,7 @@ if( !class_exists("CommissionModel") )
 				" left join " . tablename("ewei_shop_order_goods") . " og on og.orderid=o.id " .
 				" left join " . tablename("ewei_shop_goods") . " oc on og.goodsid=oc.id " .
 				" where o.status > 0 and oc.pcate = 1176 " .
-				" and o.openid = " . $member["openid"] 
+				" and o.openid = '" . $member["openid"]."'"
 				);
 			if (empty($total["ordermoney"])) {
 				return 0;
@@ -811,7 +815,7 @@ if( !class_exists("CommissionModel") )
 					}
 				}				
 			}
-			pdo_update("ewei_sho_member",array("weekglonsnum"=>date('W'),"weekmoney"=>$total),array("id"=>$agentid));
+			pdo_update("ewei_shop_member",array("weekglonsnum"=>date('W'),"weekmoney"=>$total),array("id"=>$agentid));
 			return $total;
 			//此处明天组织组织，另外其他几个函数也要家伙是那个操作数据库的逻辑
 		}
@@ -825,32 +829,35 @@ if( !class_exists("CommissionModel") )
 			}
 			return false;
 		}
-		// 获取这个人的上周的新增业绩
+		// /*获取这个人的上周的新增业绩*/
+        //获取某一用户上周产生业绩
 		public function GetNewTotalformeByWeekByID($id){
-			global $_W;
-			$member = m("member")->getMember($id);
-			$total = pdo_fetch("select sum(og.realprice) as ordermoney from "
-				. tablename("ewei_shop_order") . " o ".
-				" left join " . tablename("ewei_shop_order_goods") . " og on og.orderid=o.id " .
-				" left join " . tablename("ewei_shop_goods") . " oc on og.goodsid=oc.id " .
-				" where o.status > 0 and oc.pcate = 1176 and from_unixtime(og.createtime) > " . mktime(0,0,0,date('m'),date('d')-date('w')+1-7,date('Y')) .
-				" and from_unixtime(og.createtime) < " . mktime(23,59,59,date('m'),date('d')-date('w')+7-7,date('Y')) . 
-				" and o.openid = " . $member["openid"] 
-				);
-			if (empty($total["ordermoney"])) {
-				return 0;
-			}
-			return $total["ordermoney"];
-		}
+        global $_W;
+        $member = m("member")->getMember($id);
+        $total = pdo_fetch("select sum(og.realprice) as ordermoney from "
+            . tablename("ewei_shop_order") . " o ".
+            " left join " . tablename("ewei_shop_order_goods") . " og on og.orderid=o.id " .
+            " left join " . tablename("ewei_shop_goods") . " oc on og.goodsid=oc.id " .
+            " where o.status > 0 and oc.pcate = 1176 and og.createtime > " .
+            mktime(0,0,0,date('m'),date('d')-date('w')+1-7,date('Y')) .
+            " and og.createtime < " .
+            mktime(23,59,59,date('m'),date('d')-date('w')+7-7,date('Y')) .
+            " and o.openid = '" . $member["openid"]."'"
+        );
+        if (empty($total["ordermoney"])) {
+            return 0;
+        }
+        return $total["ordermoney"];
+    }
 		//获取某人上周的新增业绩
 		public function GetNewTotalformeByWeek($angentid){
 			global $_W;
 			$totalforme = 0;
 			$member = m("member")->getMember($agentid);
 			if($member["weeknum"] == date('w')) return $member["weeksummoney"];
-			$allmember = pdo_fetchall("select openid from " . tablename("ewei_shop_member") .
-        		" where jiedianrenid =:agid and isagent=1 and status=1 ",
-        	array( ":agid" => $agentid));
+			$allmember = pdo_fetchall("select openid from " .
+                tablename("ewei_shop_member") .
+        		" where jiedianrenid =:agid and isagent=1 and status=1 ",array( ":agid" => $agentid));
         	$totalforme += $this->GetNewTotalformeByWeekByID($agentid);
         	foreach ($allmember as $onemember) {
         		$totalforme += this.GetNewTotalformeByWeek($onemember["id"]);

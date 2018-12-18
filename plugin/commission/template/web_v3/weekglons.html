@@ -1,16 +1,14 @@
 {template '_header'}
-<style>
 
-    .tth{
-        text-align: center;
-        min-width: 100px;
-    }
+<!-- v1.011 周分红事宜 -->
 
-/*   v1.011 周分红事宜*/
-</style>
 <div class="page-header">
     当前位置：<span class="text-primary">周分红管理</span>
 </div>
 <div>这里显示周分红发放详情</div>
 <br>
 <div>这里显示周分红发放记录</div>
+{loop $item $ro $to}
+1
+{$to["zhou"]}<br>
+{/loop}

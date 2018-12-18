@@ -98,17 +98,19 @@
 					{if 1==1}
 					<!--周-->
 					<div class="text fenhong-text fenhong-zhou">
-						<div class="num">上周分红
+                        <a class="fui-block-child new external" href="{php echo mobileUrl('commission/zhou')}">
+						    <div class="num">周分红
 						</div>
 						<!-- <div class="num">{php echo number_format($member['weekmoney'],2)}</div> -->
 						<!-- <div class="title">上周分红(元)</div> -->
-						<div class="title"><!--//{if $can_yue}(已提现){else}(未提现){/if}--></div>
+						<!--<div class="title">&lt;!&ndash;//{if $can_yue}(已提现){else}(未提现){/if}&ndash;&gt;</div>-->
+                        </a>
 					</div>
 					<!--月-->
 					<div class="text fenhong-text">
 						<a class="fui-block-child new external" href="{php echo mobileUrl('commission/yue')}">
 						<!-- <div class="num">{php echo number_format($member['monthmoney'],2)} -->
-							<div class="num">上月分红
+							<div class="num">月分红
 						</div>
 						<!-- <div class="title">上月分红</div> -->
 						<!-- <div class="title">{if $can_yue==3}(已提现){elseif $can_yue==1}(正在申请提现){elseif $can_yue==2}(待打款){elseif $can_yue==0}(未提现){/if}</div> -->
