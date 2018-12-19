@@ -1,0 +1,10 @@
+{template '_header'}
+
+<!-- v1.011 周分红事宜 -->
+
+<div class="page-header">
+    当前位置：<span class="text-primary">周分红管理</span>
+</div>
+{loop $item $to}
+{$to["id"]}{$to["realname"]}{$to["agentlevel"]}<br>
+{/loop}
