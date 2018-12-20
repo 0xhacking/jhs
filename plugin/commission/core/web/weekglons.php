@@ -14,12 +14,12 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
         $a = $this->get_member_id();
         //       $b = $this -> get_member_total();
 //        $c = $this -> get_member_oneweek_total();
-//        $c = $this -> get_member_down();
-        $c = $this -> digui(10);
+        $c = $this -> get_member_down($_GPC['id']);
+        //$c = $this -> digui(10);
         for($i = 0 ; $i<count($this->get_member_id()) ; $i++){
             $item[$i] = $a[$i];
 //            $item[$i]["one_total"] = $b[$i];
-//            $item[$i]["one_week_total"] = $c[$i];
+            $item[$i]["one_week_total"] = $c[$i];
         }
         //$item['one_week_total'] = $this -> get_member_oneweek_total();
         //$item = $this->model->GetNewTotalformeByWeekByID('6572');
@@ -39,16 +39,11 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
         return $g_m;
     }
 
-
-
-
-
-
-
-
-
-
     //获取每个人的下级
+        /*
+         * cid 上级id
+         * id 要查询的id
+         * */
     public function get_member_down($id){
         global $_W;
         global $_GPC;
@@ -63,7 +58,6 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
             //此处做第一次计算，如果此函数为第一次调取
             //获取id对应的一级下级
             for($i = 0 ; $i<count($g_m);$i++){
-//               c empty(pdo_fetchall("select id from ".tablename('ewei_shop_member')." where jiedianrenid = ".$g_m[$i]["id"]))?0:1;
                 //$a[$i] = $g_m[$i]['id'];
                 $down_cache = pdo_fetchall("select id from ".tablename('ewei_shop_member')." where jiedianrenid = ".$g_m[$i]["id"]);
                 if(!empty($down_cache)){
@@ -78,24 +72,47 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
                     $a[$g_m[$i]['id']][0]["id"] = "0";
                 }
             }
+            return $a;
+           // show_json(1,$id);
+        }
+
+        //id不为空时
+        $aa = 0;
+        //当前id包含下级
+        $down_cache = pdo_fetchall("select id from ".tablename('ewei_shop_member')." where jiedianrenid = ".$id);
+        //查询下级的下级
+        if(empty($down_cache)){
+            $down_cache = pdo_fetchall("select id from ".tablename('ewei_shop_member')." where jiedianrenid = ".$_GPC['id']);
+            show_json(1,$down_cache);
         }else{
-            $z++;
+            foreach ($down_cache as $item){
+//                    echo $item['id'];
+//                echo $this->demo("asdf");
+                //echo "这是第一次";
+                this.$this->get_member_down($item['id']);
+                echo "这是第一次";
+
+            }
         }
-            //如果进行多次查询
-            //此处做递归计算
-        //$r = 1;
-        //$r++;
-        foreach ($a as $item) {
-            this.$this->get_member_down('9');
-        }
-          show_json(1,$z);
+        show_json(1,$down_cache);
 
 
-        //print_r($a);
-        show_json(1,$a);
+
         return $a;
 
     }
+
+//查询业绩函数
+    public function demo($id){
+        $r = 8;
+        return $r;
+    }
+
+
+
+
+
+
 
     //获取每个人的总业绩(当前用户)
     public function get_member_total(){
