@@ -24,22 +24,15 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
         $item = Array();
         //定义二级模板数据
         /*
-         * id
-         * total_by_new_week
-         *
+         * id 用户ID
+         * new_week_make 上周产生业绩
+         * new_week_total 上周业绩
+         * level 分销等级
          * */
         $item_down = Array();
         //获取各种信息
         $they_one = $this->get_member_id();//获取全部的消费股东与公司合伙人
         $they_all_down = $this -> get_member_down($g_m_all,$_GPC['id'],0);//获取所有用户的下级并按接点人顺序分级
-        $they_down = $this -> get_member_down($g_m_all,$_GPC['id'],0);
-        $they_total = "0";
-//        show_json(1,$_GPC['id']);
-        //show_json(1,$this ->get_member_down($g_m_all,'6565',0)['1']);
-//
-//        foreach($array as $value){
-//               echo str_repeat('--', $value['level']), $value['id'].'<br />';
-//            }
         //show_json(1,$this -> get_member_id("down_num"));
         //组织一级模板数组
         for($i = 0 ;$i<count($they_one); $i++){
@@ -47,14 +40,18 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
             $item[$i]['level'] = $they_all_down[$i]['level'];
             $item[$i]['total'] = $this -> get_member_total()[$i];
             $item[$i]['total_new_week'] = $this -> get_member_oneweek_total_all()[$i];
+            $item[$i]['down_total_new_week'] = $this -> get_member_oneweek_total( $they_one[$i]['id']);
             }
         //组织二级模板数组
         for($p = 0 ;$p<count($they_all_down); $p++){
             $item_down[$p] = $they_all_down[$p];
-            //show_json(1,$this -> get_member_id("info","6572"));
+            //show_json(1,$they_all_down);
             $item_down[$p]['nickname'] = $this -> get_member_id("info",$they_all_down[$p]['id'])[0]['nickname'];
             $item_down[$p]['realname'] = $this -> get_member_id("info",$they_all_down[$p]['id'])[0]['realname'];
             $item_down[$p]['level'] = $this -> get_member_id("info",$they_all_down[$p]['id'])[0]['level'];
+            $item_down[$p]['new_week_make'] = $this -> model->GetNewTotalformeByWeekByID($they_all_down[$p]['id']);
+            $item_down[$p]['new_week_total'] =$this -> get_member_oneweek_total($they_all_down[$p]['id']);
+            //show_json(1,$this -> model->GetTotalforme('6574'));
         }
         //show_json(1,$item);
         include $this->template();
@@ -111,10 +108,7 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
     public function get_member_oneweek_total($id){
         global $_W;
         global $_GPC;
-
-        $g_m = $this -> get_member_id();
-        $g_m_w_t = Array();
-
+        $g_m_w_t = $this -> model->GetTotalforme($id);
         //show_json(1,$g_m[2]['id']);
         return $g_m_w_t;
     }
@@ -134,7 +128,6 @@ class Weekglons_EweiShopV2Page extends PluginWebPage
         //show_json(1,$g_m_w_t);
         return $g_m_w_t_a;
     }
-
     //计算当前用户上周周分红
     public function get_member_zhou(){
         global $_W;

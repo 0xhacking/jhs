@@ -10,6 +10,22 @@ class System_EweiShopV2Model {
             $this->merch = true;
         }
     }
+    //获取时间日期
+    public function get_week_num(){
+        $w=date('w');
+        $week=array(
+            "0"=>"星期日",
+            "1"=>"星期一",
+            "2"=>"星期二",
+            "3"=>"星期三",
+            "4"=>"星期四",
+            "5"=>"星期五",
+            "6"=>"星期六"
+        );
+//        show_json(1,$week[$w]);
+//        echo '今天是'.$week[$w];
+        return $week[$w];
+    }
     public function getMenu($full = false) {
         global $_W;
         global $_GPC;

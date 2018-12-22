@@ -2,6 +2,7 @@
 
 {php $system=m('system')->init()}
 {php $sysmenus = m('system')->getMenu(true)}
+{php $week_num = m('system')->get_week_num()}
 {php $notice_redis_click = m('common')->getSysset('notice_redis')}
 <!--多商户图片选择器删除图片没有方法解决  只能在此隐藏-->
 {if strpos( $_W['script_name'] , 'merchant' ) != false}
@@ -48,13 +49,14 @@
     <div class="wb-header-flex"></div>
 
     <ul>
-        <!--{if $system['right_menu']['system']}-->
-            <!--<li data-toggle="tooltip" data-placement="bottom" title="">-->
-                <!--<a href="{php echo webUrl('system')}">-->
-                    <!--系统管理-->
-                <!--</a>-->
-            <!--</li>-->
-        <!--{/if}-->
+        <li data-toggle="tooltip" data-placement="bottom" title="">{if $week_num =="星期一" }{$week_num}，<span style="color: red">今日应该发放周分红</span>{else}{$week_num}{/if}</li>
+        {if $system['right_menu']['system']}
+            <li data-toggle="tooltip" data-placement="bottom" title="">
+                <a href="{php echo webUrl('system')}">
+                    系统管理
+                </a>
+            </li>
+        {/if}
         {if p('app')}
             {php  $appsets = p('app')->getGlobal()}
             {if !empty($appsets['mmanage']['qrcode'])}
@@ -90,7 +92,7 @@
                 <span></span>
             </a>
             <!-- v1.006 start-->
-<!-- 
+
             <ul class="dropdown-menu" {if $system['routes'][0]=='system'}style="width:100%;left:0"{/if}>
                 {if $system['routes'][0]!='system'}
                 {loop $system['right_menu']['menu_items'] $right_menu_item}
@@ -108,7 +110,8 @@
                 {else}
                 <li style="margin-top: 0;height: 50px;line-height: 50px"><a href="./index.php?c=account&a=display&">返回系统</a></li>
                 {/if}
-            </ul> -->
+            </ul>
+
              <!-- v1.006 end-->
         </li>
         <li data-toggle="tooltip" data-placement="bottom" title="退出登录" data-href="{$system['right_menu']['logout']}">
