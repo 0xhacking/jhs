@@ -1,77 +1,30 @@
-	{template '_zhou_header'}
-	<body>
+{template '_header'}
 
-		<div class="container">
-			<button id="menu-toggle" class="menu-toggle"><span>Menu</span></button>
-			<div id="theSidebar" class="sidebar" style="background-color: beige;">
-				<button class="close-button fa fa-fw fa-close"></button>
-				<h1><span>用户详情<span></h1>
-			</div>
-			<div id="theGrid" class="main">
-				<section class="grid">
-					{loop $item $to}
-						<a class="grid__item" href="#" style="width: 25%;padding: 46px 28px 25px;">
-							<h2 class="title title--preview">{$to["realname"]}</h2>
-							<div class="loader"></div>
-							<span class="category" style="font-size: 20px">{$to["nickname"]}</span>
-							<div class="meta meta--preview">
-								<span class="category" style="font-size: 20px">ID:{$to["id"]}</span>
-								<img class="meta__avatar" src="{$to['avatar']}" alt="author04" />
-								<span class="meta__date"><i class="fa fa-calendar-o"></i>累计奖金</span><br>
-								<span class="meta__date"><i class="fa fa-calendar-o"></i>本月消费</span><br>
-								<span class="meta__date"><i class="fa fa-calendar-o"></i>第几月月分红</span><br>
-								<span class="meta__date"><i class="fa fa-calendar-o"></i>第几周周分红</span>
-								<span class="meta__reading-time">{if $to["agentlevel"] == 12 }公司合伙人 {else if $to['agentlevel'] == 10 } 消费股东 {else if $to['agentlevel'] == 9 } 高级消费商  {else} 消费商{/if}</span>
-							</div>
-						</a>
-					{/loop}
-				</section>
+<!-- v1.011 周分红事宜 -->
 
-				<section class="content">
-					<div class="scroll-wrap">
-						{loop $item $to}
-							<!--这里显示当前用户的详细信息-->
-							<article class="content__item">
-								<span class="category category--full">{$to["realname"]}</span>
-								<h2 class="title title--full" style="font-size: 20px">{$to["nickname"]}</h2>
-								<div class="meta meta--full">
-									<!-- 这里是头像 -->
-									<img class="meta__avatar" src="{$to['avatar']}" alt="author04" />
-									<span class="category" style="font-size: 20px;text-align: center">ID:{$to["id"]}</span>
-									<span class="meta__author" style="font-size: 20px;text-align: center">{$to["realname"]}</span>
-									<span class="meta__date"><i class="fa fa-calendar-o"></i>第几周周分红</span>
-									<span class="meta__reading-time"><i class="fa fa-clock-o"></i>级别</span>
-									<table>
-										<tr>
-											<td><span class="meta__misc">昵称:</span></td>
-											<td>{$to["nickname"]}</td>
-										</tr>
-									</table>
-									<span class="meta__misc">昵称:{$to["nickname"]}</span>
-									<span class="meta__misc">真实姓名:{$to["realname"]}</span>
-									<span class="meta__misc">累计奖金</span>
-									<span class="meta__misc">累计周分红</span>
-									<span class="meta__misc">累计月分红</span>
-									<span class="meta__misc">累计提现</span>
-									<span class="meta__misc">待审核奖金</span>
-									<span class="meta__misc">待打款奖金</span>
-									<span class="meta__misc">可提现奖金</span>
-									<span class="meta__misc">积分</span>
-								</div>
+<div class="page-header">
+    当前位置：<span class="text-primary">周分红管理</span>
+</div>
+一级<br>
 
-
-								<p>这里是详情</p>
-							</article>
-						{/loop}
-					</div>
-					<button class="close-button"><i class="fa fa-close" style="font-size:  -webkit-xxx-large"></i><span>Close</span></button>
-				</section>
-			</div>
-		</div><!-- /container -->
-		<script src="{php echo EWEI_SHOPV2_LOCAL}zhou/js/classie.js"></script>
-		<script src="{php echo EWEI_SHOPV2_LOCAL}zhou/js/main.js"></script>
-	</body>
-</html>
-
-{template '_footer'}
+{loop $item $to}
+<a href="{php echo webUrl('commission/weekglons',array('id' => $to['id']));}">
+        ID:{$to["id"]}<br>
+        昵称:{$to["realname"]}<br>
+        分销等级:{$to["agentlevel"]}<br>
+        总业绩:{$to['total']}<br>
+        上周业绩:{$to['down_total_new_week']}<br>
+        上周产生:{$to['total_new_week']}<br>
+        周分红:{$to["one_week_total"]}
+</a><br><br><br>
+{/loop}
+二级<br>
+{loop $item_down $id}
+    ID:{$id["id"]}<br>
+    昵称:{$id["nickname"]}<br>
+    真实姓名:{$id["realname"]}<br>
+    分销等级:{$id["level"]}<br>
+    上周业绩:{$id["new_week_total"]}<br>
+    上周产生:{$id["new_week_make"]}<br><br><br>
+{/loop}
 

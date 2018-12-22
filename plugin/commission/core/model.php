@@ -713,8 +713,7 @@ if( !class_exists("CommissionModel") )
 			$member = m("member")->getMember($agentid);
 			if($member["weeksumnum"] == date('w')) return $member["weeksum"];
 			$allmember = pdo_fetchall("select openid from " . tablename("ewei_shop_member") .
-        		" where jiedianrenid =:agid and isagent=1 and status=1 ",
-        	array( ":agid" => $agentid));
+        		" where jiedianrenid =:agid and isagent=1 and status=1 ",array( ":agid" => $agentid));
         	$totalforme += $this->GetTotalformByWeekById($agentid);
         	foreach ($allmember as $onemember) {
         		$totalforme += this.GetTotalformeByWeek($onemember["id"]);
